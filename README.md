@@ -2,6 +2,18 @@
 
 A clean, user-friendly frontend application for testing any OpenAPI-compliant API dynamically. This tool loads your API specification from OpenAPI JSON files or URLs and provides an intuitive interface for testing all endpoints without needing external tools like Postman.
 
+## 🚀 Live Demo
+
+Try the application at: **<https://openapi-tester-frontend.netlify.app>**
+
+> **⚠️ For full features and data security, we strongly recommend running locally!**  
+> The live demo is great for quick testing, but running locally ensures:
+>
+> - Complete feature access without any limitations
+> - Enhanced data security (your API keys and tokens never leave your machine)
+> - Better performance and reliability
+> - Full control over your testing environment
+
 ## Features
 
 - **Multiple Input Methods**: Load OpenAPI specs from URLs, file uploads, or direct JSON input
