@@ -14,6 +14,19 @@ Try the application at: **<https://openapi-tester-frontend.netlify.app>**
 > - Better performance and reliability
 > - Full control over your testing environment
 
+## 💡 Why This Project?
+
+While Swagger UI provides excellent API documentation (and we love it for that!), its testing interface can feel clunky and outdated. This project was born from the frustration of switching between documentation and external tools like Postman for actual API testing.
+
+**OpenAPI Tester** bridges this gap by offering:
+
+- A modern, intuitive testing interface that doesn't sacrifice functionality
+- Seamless integration with any OpenAPI specification
+- Better user experience for developers who need to test APIs frequently
+- All the power of Swagger's documentation with a superior testing experience
+
+Think of it as "Swagger UI, but designed specifically for testing" - keeping the comprehensive API coverage while dramatically improving the user experience.
+
 ## Features
 
 - **Multiple Input Methods**: Load OpenAPI specs from URLs, file uploads, or direct JSON input
