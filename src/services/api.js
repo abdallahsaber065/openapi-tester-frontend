@@ -2,12 +2,17 @@ import axios from 'axios';
 
 // Create axios instance with base configuration
 const api = axios.create({
-    baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8000',
+    baseURL: process.env.REACT_APP_API_URL || '',
     timeout: 30000,
     headers: {
         'Content-Type': 'application/json',
     },
 });
+
+// Function to set API base URL dynamically
+export const setApiBaseUrl = (baseUrl) => {
+    api.defaults.baseURL = baseUrl;
+};
 
 // Request interceptor for adding auth token
 api.interceptors.request.use(
@@ -42,6 +47,7 @@ api.interceptors.response.use(
 
 export const fetchOpenAPISpec = async () => {
     try {
+        // Try default path first
         const response = await api.get('/api/v1/openapi.json');
         return response.data;
     } catch (error) {
@@ -50,21 +56,21 @@ export const fetchOpenAPISpec = async () => {
     }
 };
 
-export const executeRequest = async ({ path, method, data, authToken }) => {
+export const executeRequest = async ({ path, method, data, authToken, config: customConfig }) => {
     try {
-        const config = {
+        const config = customConfig || {
             url: path,
             method: method.toLowerCase(),
             headers: {},
         };
 
-        // Add auth token if provided
-        if (authToken) {
+        // Add auth token if provided and no custom config
+        if (!customConfig && authToken) {
             config.headers.Authorization = `Bearer ${authToken}`;
         }
 
-        // Add data based on method
-        if (['post', 'put', 'patch'].includes(method.toLowerCase()) && data.body) {
+        // Add data based on method if no custom config
+        if (!customConfig && ['post', 'put', 'patch'].includes(method.toLowerCase()) && data.body) {
             config.data = data.body;
         }
 

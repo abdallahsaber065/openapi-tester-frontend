@@ -4,10 +4,11 @@ import { FiBook, FiCode, FiPlay } from 'react-icons/fi';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { executeRequest } from '../services/api';
+import { applyAuthentication, getOperationSecurity, requiresAuth } from '../services/auth';
 import './MainContent.css';
 import RequestForm from './RequestForm';
 
-const MainContent = ({ selectedEndpoint, authToken, openApiSpec, requestHistory, onSaveRequest, getEndpointKey }) => {
+const MainContent = ({ selectedEndpoint, authToken, openApiSpec, requestHistory, onSaveRequest, getEndpointKey, securitySchemes, globalSecurity, authData }) => {
     const [loading, setLoading] = useState(false);
     const [activeTab, setActiveTab] = useState('test');
     const [responseTab, setResponseTab] = useState('body');
@@ -22,11 +23,34 @@ const MainContent = ({ selectedEndpoint, authToken, openApiSpec, requestHistory,
         const endpointKey = getEndpointKey(selectedEndpoint.path, selectedEndpoint.method);
 
         try {
+            // Create request configuration
+            const config = {
+                url: formData.path,
+                method: selectedEndpoint.method.toLowerCase(),
+                headers: {},
+            };
+
+            // Add request body for applicable methods
+            if (['post', 'put', 'patch'].includes(selectedEndpoint.method.toLowerCase()) && formData.body) {
+                config.data = formData.body;
+            }
+
+            // Apply authentication
+            const operationSecurity = getOperationSecurity(selectedEndpoint.spec, globalSecurity);
+            const authenticatedConfig = applyAuthentication(config, authData, securitySchemes, operationSecurity);
+
+            // Add legacy auth token if no modern auth is applied and token exists
+            const needsAuth = requiresAuth(selectedEndpoint.spec, globalSecurity);
+            if (needsAuth && authToken && !authenticatedConfig.headers.Authorization) {
+                authenticatedConfig.headers.Authorization = `Bearer ${authToken}`;
+            }
+
             const result = await executeRequest({
                 path: selectedEndpoint.path,
                 method: selectedEndpoint.method,
                 data: formData,
-                authToken
+                authToken,
+                config: authenticatedConfig
             });
 
             const responseData = {

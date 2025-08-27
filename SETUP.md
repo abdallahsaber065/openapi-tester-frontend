@@ -2,46 +2,72 @@
 
 ## 🚀 Getting Started
 
-1. **Make sure your backend is running**:
+1. **Start the frontend**:
 
    ```bash
-   # From the backend directory
-   python main.py
-   ```
-
-   Your API should be accessible at `http://localhost:8000`
-
-2. **Start the frontend**:
-
-   ```bash
-   # From this directory (test-frontend)
+   # From this directory (openapi-tester)
+   npm install
    npm start
    ```
 
-   Or double-click `start.bat` on Windows
-
-3. **Open your browser**:
+2. **Open your browser**:
    The app will automatically open at `http://localhost:3000`
+
+3. **Load your API specification**:
+   Click "Load API" in the header and choose one of three options:
+   - **From URL**: Enter your OpenAPI JSON URL
+   - **Upload File**: Select a local OpenAPI JSON file
+   - **Direct Input**: Paste your OpenAPI JSON content
 
 ## 🔑 Authentication
 
-1. First, register or login through your API to get a token
-2. Click "Auth Token" in the header
-3. Paste your JWT token
-4. Now you can test authenticated endpoints!
+### Modern Authentication (Recommended)
+
+1. Click **"Authorize"** in the header (appears when security schemes are detected)
+2. Choose your authentication method:
+   - **API Key**: Enter your key (auto-placed in header/query/cookie)
+   - **HTTP Basic**: Enter username & password
+   - **HTTP Bearer**: Enter your JWT/bearer token
+   - **OAuth 2.0**: Enter access token (view flows & scopes)
+   - **OpenID Connect**: Enter OIDC access token
+3. Click "Save Authentication"
+
+### Legacy Token (Fallback)
+
+1. Click "Auth Token" in the header (only shows when no modern auth detected)
+2. Enter your JWT access token
+3. Click "Save Token"
+
+All auth data is stored locally in your browser! 🔒
 
 ## ✨ Features
 
-- **Dynamic Loading**: Automatically loads your API spec from `/api/v1/openapi.json`
+- **Multiple Input Methods**: Load specs from URLs, files, or direct input
+- **Auto Base URL Detection**: Automatically extracts API base URL from specs
+- **Dynamic Loading**: Automatically parses any OpenAPI 3.0+ specification
 - **Smart Forms**: Generates forms based on your OpenAPI schema
 - **Live Testing**: Test any endpoint with real requests
+- **Request History**: Each endpoint remembers its last 10 requests
+- **Request Reuse**: Click to reuse any previous request
 - **Response Viewer**: Formatted JSON responses with syntax highlighting
-- **Authentication**: Built-in JWT token management
+- **Complete Authentication**: Supports all OpenAPI security schemes:
+  - API Key (header/query/cookie)
+  - HTTP (Basic/Bearer/Digest)
+  - OAuth 2.0 (all flows)
+  - OpenID Connect
+- **Local Data Storage**: All your data stays in your browser
+
+## 🌐 Example APIs to Try
+
+- **Swagger Petstore**: `https://petstore.swagger.io/v2/swagger.json`
 
 ## 🛠️ Troubleshooting
 
-- **Backend not found**: Make sure your API is running on port 8000
-- **CORS errors**: Check your FastAPI CORS settings
-- **Token issues**: Make sure your JWT token is valid and not expired
+- **Spec loading failed**: Check that the URL returns valid JSON and is accessible
+- **File upload issues**: Ensure you're uploading a valid OpenAPI JSON file
+- **CORS errors**: The API server needs to allow requests from localhost:3000
+- **Auth not working**: Use the "Authorize" button for proper authentication setup
+- **Token issues**: Make sure your tokens are valid and not expired
+- **Request failures**: Verify the API base URL is correct (auto-detected or manual)
 
-Enjoy testing your API! 🎉
+Enjoy testing any OpenAPI-compliant API! 🎉

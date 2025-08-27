@@ -1,7 +1,7 @@
 {
-    "name": "blog-api-tester",
+    "name": "openapi-tester",
     "version": "1.0.0",
-    "description": "A clean, user-friendly API testing interface for the Blog API",
+    "description": "A clean, user-friendly API testing interface for any OpenAPI-compliant API",
     "private": true,
     "dependencies": {
         "@testing-library/jest-dom": "^5.17.0",
