@@ -1,10 +1,11 @@
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
-import { FiAlertCircle, FiChevronDown, FiChevronRight, FiLoader } from 'react-icons/fi';
+import { FiAlertCircle, FiChevronDown, FiChevronRight, FiLoader, FiInfo } from 'react-icons/fi';
+import ApiInfo from './ApiInfo';
 import './Sidebar.css';
 
 const Sidebar = ({ openApiSpec, selectedEndpoint, onEndpointSelect, loading, error }) => {
-    const [expandedSections, setExpandedSections] = useState(new Set(['Authentication']));
+    const [expandedSections, setExpandedSections] = useState(new Set(['API Info']));
     const [groupedEndpoints, setGroupedEndpoints] = useState({});
 
     useEffect(() => {
@@ -109,13 +110,34 @@ const Sidebar = ({ openApiSpec, selectedEndpoint, onEndpointSelect, loading, err
     return (
         <div className="sidebar">
             <div className="sidebar-header">
-                <h2>API Endpoints</h2>
+                <h2>API Explorer</h2>
                 <span className="endpoint-count">
                     {Object.values(groupedEndpoints).reduce((acc, endpoints) => acc + endpoints.length, 0)} endpoints
                 </span>
             </div>
 
             <div className="sidebar-content">
+                {/* API Info Section */}
+                <div className="endpoint-section">
+                    <button
+                        className="section-header"
+                        onClick={() => toggleSection('API Info')}
+                    >
+                        <div className="section-header-content">
+                            {expandedSections.has('API Info') ? <FiChevronDown /> : <FiChevronRight />}
+                            <FiInfo className="section-icon" />
+                            <span className="section-title">API Information</span>
+                        </div>
+                    </button>
+
+                    {expandedSections.has('API Info') && (
+                        <div className="api-info-section">
+                            <ApiInfo openApiSpec={openApiSpec} />
+                        </div>
+                    )}
+                </div>
+
+                {/* Endpoints Sections */}
                 {Object.entries(groupedEndpoints).map(([tag, endpoints]) => (
                     <div key={tag} className="endpoint-section">
                         <button
