@@ -266,18 +266,18 @@ const MainContent = ({ selectedEndpoint, authToken, openApiSpec, requestHistory,
                                                 {JSON.stringify(getCurrentEndpointHistory().lastResponse.data, null, 2)}
                                             </SyntaxHighlighter>
                                         ) : (
-                                            <SyntaxHighlighter
-                                                language="json"
-                                                style={oneLight}
-                                                customStyle={{
-                                                    margin: 0,
-                                                    padding: '16px',
-                                                    background: '#f8fafc',
-                                                    border: '1px solid #e2e8f0',
-                                                    borderRadius: '8px',
-                                                    fontSize: '13px'
-                                                }}
-                                            >
+                                        <SyntaxHighlighter
+                                            language="json"
+                                            style={oneLight}
+                                            customStyle={{
+                                                margin: 0,
+                                                padding: '16px',
+                                                background: '#f8fafc',
+                                                border: '1px solid #e2e8f0',
+                                                borderRadius: '8px',
+                                                fontSize: '13px'
+                                            }}
+                                        >
                                                 {JSON.stringify(getCurrentEndpointHistory().lastResponse.headers, null, 2)}
                                             </SyntaxHighlighter>
                                         )}
@@ -376,9 +376,9 @@ const MainContent = ({ selectedEndpoint, authToken, openApiSpec, requestHistory,
                                                     }}
                                                 >
                                                     {JSON.stringify(entry.response.data, null, 2)}
-                                                </SyntaxHighlighter>
-                                            </div>
-                                        </div>
+                                        </SyntaxHighlighter>
+                                    </div>
+                                </div>
                                     </div>
                                 ))}
                             </div>
